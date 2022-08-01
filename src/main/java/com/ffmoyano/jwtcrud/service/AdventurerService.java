@@ -1,15 +1,14 @@
-package com.ffmoyano.idunn.service;
+package com.ffmoyano.jwtcrud.service;
 
 
-import com.ffmoyano.idunn.dto.AdventurerDto;
-import com.ffmoyano.idunn.entity.Adventurer;
-import com.ffmoyano.idunn.repository.AdventurerRepository;
+import com.ffmoyano.jwtcrud.dto.AdventurerDto;
+import com.ffmoyano.jwtcrud.entity.Adventurer;
+import com.ffmoyano.jwtcrud.repository.AdventurerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AdventurerService {

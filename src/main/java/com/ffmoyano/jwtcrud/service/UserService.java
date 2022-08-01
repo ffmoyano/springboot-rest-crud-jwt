@@ -1,7 +1,7 @@
-package com.ffmoyano.idunn.service;
+package com.ffmoyano.jwtcrud.service;
 
-import com.ffmoyano.idunn.entity.AppUser;
-import com.ffmoyano.idunn.repository.UserRepository;
+import com.ffmoyano.jwtcrud.entity.AppUser;
+import com.ffmoyano.jwtcrud.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import org.springframework.security.core.userdetails.User;
@@ -21,6 +21,7 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    // this methods provides the UserDetails object to the attemptAuthentication method of AuthenticationManager
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         AppUser user = userRepository.findByEmail(email);

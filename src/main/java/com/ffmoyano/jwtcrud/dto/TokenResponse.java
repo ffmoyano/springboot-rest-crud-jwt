@@ -1,4 +1,4 @@
-package com.ffmoyano.idunn.dto;
+package com.ffmoyano.jwtcrud.dto;
 
 public class TokenResponse {
 

@@ -1,13 +1,13 @@
-package com.ffmoyano.idunn;
+package com.ffmoyano.jwtcrud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IdunnApplication {
+public class JwtCrudApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(IdunnApplication.class, args);
+        SpringApplication.run(JwtCrudApplication.class, args);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.ffmoyano.idunn.dto;
+package com.ffmoyano.jwtcrud.dto;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;

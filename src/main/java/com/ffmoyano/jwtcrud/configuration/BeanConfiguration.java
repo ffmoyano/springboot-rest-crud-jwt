@@ -1,4 +1,4 @@
-package com.ffmoyano.idunn.configuration;
+package com.ffmoyano.jwtcrud.configuration;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;

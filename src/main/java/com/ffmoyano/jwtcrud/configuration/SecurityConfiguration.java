@@ -1,9 +1,9 @@
-package com.ffmoyano.idunn.configuration;
+package com.ffmoyano.jwtcrud.configuration;
 
-import com.ffmoyano.idunn.filter.CustomAuthenticationFilter;
-import com.ffmoyano.idunn.filter.CustomAuthorizationFilter;
-import com.ffmoyano.idunn.service.TokenService;
-import com.ffmoyano.idunn.service.UserService;
+import com.ffmoyano.jwtcrud.filter.CustomAuthenticationFilter;
+import com.ffmoyano.jwtcrud.filter.CustomAuthorizationFilter;
+import com.ffmoyano.jwtcrud.service.TokenService;
+import com.ffmoyano.jwtcrud.service.UserService;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,7 +54,10 @@ public class SecurityConfiguration {
                                 .anyRequest().authenticated())
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // first we add the customAuthenticationFilter and after it the customAuthorizationFilter
                 .addFilter(customAuthenticationFilter)
+                // the first parameter is the filter,
+                // the second is the class of the preceding filter (customAuthenticationFilter)
                 .addFilterAfter(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 

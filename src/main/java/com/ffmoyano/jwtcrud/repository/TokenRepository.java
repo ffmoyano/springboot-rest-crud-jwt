@@ -1,7 +1,7 @@
-package com.ffmoyano.idunn.repository;
+package com.ffmoyano.jwtcrud.repository;
 
-import com.ffmoyano.idunn.entity.Token;
-import com.ffmoyano.idunn.entity.AppUser;
+import com.ffmoyano.jwtcrud.entity.Token;
+import com.ffmoyano.jwtcrud.entity.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

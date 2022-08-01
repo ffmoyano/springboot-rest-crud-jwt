@@ -1,7 +1,7 @@
-package com.ffmoyano.idunn.controller;
+package com.ffmoyano.jwtcrud.controller;
 
-import com.ffmoyano.idunn.dto.AdventurerDto;
-import com.ffmoyano.idunn.service.AdventurerService;
+import com.ffmoyano.jwtcrud.dto.AdventurerDto;
+import com.ffmoyano.jwtcrud.service.AdventurerService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +29,9 @@ public class AdventurerController {
         return new ResponseEntity<>(service.findAll(), HttpStatus.ACCEPTED);
     }
 
+    // path example: localhost:8080/adventurer/1
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
+    public ResponseEntity<?> findById(@PathVariable(value = "id", required = true) Long id) {
         AdventurerDto adventurerDto;
         Map<String, Object> response = new HashMap<>();
         try {
@@ -74,7 +75,7 @@ public class AdventurerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable(value = "id", required = true) Long id) {
         Map<String, Object> response = new HashMap<>();
         AdventurerDto adventurerDto = service.findById(id);
         try {

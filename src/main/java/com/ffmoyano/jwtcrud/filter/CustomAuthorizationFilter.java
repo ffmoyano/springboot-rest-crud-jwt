@@ -1,4 +1,4 @@
-package com.ffmoyano.idunn.filter;
+package com.ffmoyano.jwtcrud.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ffmoyano.idunn.configuration.AppPropertiesConfiguration;
+import com.ffmoyano.jwtcrud.configuration.AppPropertiesConfiguration;
 import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

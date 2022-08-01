@@ -1,17 +1,16 @@
-package com.ffmoyano.idunn.filter;
+package com.ffmoyano.jwtcrud.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ffmoyano.idunn.dto.TokenResponse;
-import com.ffmoyano.idunn.entity.AppUser;
-import com.ffmoyano.idunn.entity.Token;
-import com.ffmoyano.idunn.service.TokenService;
-import com.ffmoyano.idunn.service.UserService;
+import com.ffmoyano.jwtcrud.dto.TokenResponse;
+import com.ffmoyano.jwtcrud.entity.AppUser;
+import com.ffmoyano.jwtcrud.entity.Token;
+import com.ffmoyano.jwtcrud.service.TokenService;
+import com.ffmoyano.jwtcrud.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;

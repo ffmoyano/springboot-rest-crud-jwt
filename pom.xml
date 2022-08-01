@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ffmoyano</groupId>
-    <artifactId>idunn</artifactId>
+    <artifactId>jwtcrud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>idunn</name>
-    <description>idunn</description>
+    <name>jwtcrud</name>
+    <description>jwtcrud</description>
     <properties>
         <java.version>17</java.version>
     </properties>

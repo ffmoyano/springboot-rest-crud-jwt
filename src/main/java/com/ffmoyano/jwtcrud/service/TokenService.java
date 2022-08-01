@@ -1,13 +1,13 @@
-package com.ffmoyano.idunn.service;
+package com.ffmoyano.jwtcrud.service;
 
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.ffmoyano.idunn.configuration.AppPropertiesConfiguration;
-import com.ffmoyano.idunn.dto.TokenResponse;
-import com.ffmoyano.idunn.entity.Token;
-import com.ffmoyano.idunn.entity.AppUser;
-import com.ffmoyano.idunn.repository.TokenRepository;
+import com.ffmoyano.jwtcrud.configuration.AppPropertiesConfiguration;
+import com.ffmoyano.jwtcrud.dto.TokenResponse;
+import com.ffmoyano.jwtcrud.entity.Token;
+import com.ffmoyano.jwtcrud.entity.AppUser;
+import com.ffmoyano.jwtcrud.repository.TokenRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

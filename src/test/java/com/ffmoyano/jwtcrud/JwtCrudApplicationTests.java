@@ -1,11 +1,11 @@
-package com.ffmoyano.idunn;
+package com.ffmoyano.jwtcrud;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootTest
-class IdunnApplicationTests {
+class JwtCrudApplicationTests {
 
 
     @Test

@@ -1,4 +1,4 @@
-package com.ffmoyano.idunn.entity;
+package com.ffmoyano.jwtcrud.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,6 +1,6 @@
-package com.ffmoyano.idunn.repository;
+package com.ffmoyano.jwtcrud.repository;
 
-import com.ffmoyano.idunn.entity.Adventurer;
+import com.ffmoyano.jwtcrud.entity.Adventurer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
