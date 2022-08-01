@@ -11,9 +11,9 @@ public class AuthController {
         return "hello";
     }
 
-    @GetMapping("/user/")
+    @GetMapping("/authorized")
     public String authorized() {
-        return "hello";
+        return "hello authorized";
     }
 
 }

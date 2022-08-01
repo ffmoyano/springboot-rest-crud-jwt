@@ -3,12 +3,12 @@ package com.ffmoyano.idunn.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.ffmoyano.idunn.configuration.AppPropertiesConfiguration;
 import com.ffmoyano.idunn.dto.TokenResponse;
 import com.ffmoyano.idunn.entity.Token;
 import com.ffmoyano.idunn.entity.AppUser;
 import com.ffmoyano.idunn.repository.TokenRepository;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -23,13 +23,13 @@ import java.util.stream.Collectors;
 @Service
 public class TokenService {
 
-    @Value("${jwtSecret}")
-    private String jwtSecret;
-
     private final TokenRepository tokenRepository;
 
-    public TokenService(TokenRepository tokenRepository) {
+    private final AppPropertiesConfiguration appPropertiesConfiguration;
+
+    public TokenService(TokenRepository tokenRepository, AppPropertiesConfiguration appPropertiesConfiguration) {
         this.tokenRepository = tokenRepository;
+        this.appPropertiesConfiguration = appPropertiesConfiguration;
     }
 
     public TokenResponse generateTokens(User user, String url) {
@@ -48,7 +48,7 @@ public class TokenService {
 
     private String generateJwt(String email, Collection<GrantedAuthority> authorities, String url) {
 
-        Algorithm algorithm = Algorithm.HMAC256(jwtSecret.getBytes(StandardCharsets.UTF_8));
+        Algorithm algorithm = Algorithm.HMAC256(appPropertiesConfiguration.getJwtSecret().getBytes(StandardCharsets.UTF_8));
 
         return JWT.create()
                 .withSubject(email)

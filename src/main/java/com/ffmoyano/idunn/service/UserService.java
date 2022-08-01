@@ -2,10 +2,7 @@ package com.ffmoyano.idunn.service;
 
 import com.ffmoyano.idunn.entity.AppUser;
 import com.ffmoyano.idunn.repository.UserRepository;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

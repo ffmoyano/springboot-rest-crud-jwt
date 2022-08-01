@@ -14,7 +14,7 @@ class IdunnApplicationTests {
 
     @Test
     void generatePassword() {
-
+        System.out.println("EL PASSWORD: " + new BCryptPasswordEncoder().encode("fernando"));
     }
 
 }

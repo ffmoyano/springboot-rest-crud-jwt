@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -27,14 +28,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 
 
-
-
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager, UserService userService
             , TokenService tokenService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.tokenService = tokenService;
-
     }
 
 
@@ -43,6 +41,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                                                 HttpServletResponse response) throws AuthenticationException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        System.out.println("USERNAME: " + username);
+        System.out.println("PASSWORD: " + password);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         return authenticationManager.authenticate(authenticationToken);
     }
@@ -57,7 +57,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         User user = (User) authentication.getPrincipal();
         String url = request.getRequestURL().toString();
         TokenResponse tokens = tokenService.generateTokens(user, url);
-        // retrieve idunnUser from username and save tokens to database
+        // retrieve user from username and save tokens to database
         AppUser idunnUser = userService.findByEmail(user.getUsername());
         Token token = tokenService.findTokenByUser(idunnUser);
         if(token == null) {

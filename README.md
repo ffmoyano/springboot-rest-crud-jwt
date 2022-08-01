@@ -1,0 +1,1 @@
+Rest API example with CRUD and JWT auth

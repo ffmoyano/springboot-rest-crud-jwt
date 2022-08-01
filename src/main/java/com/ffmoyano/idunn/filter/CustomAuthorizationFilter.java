@@ -6,8 +6,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ffmoyano.idunn.configuration.AppPropertiesConfiguration;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,21 +32,20 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     private final Logger log;
 
-    @Value("${jwtSecret}")
-    private String jwtSecret;
+    private final AppPropertiesConfiguration appPropertiesConfiguration;
 
-    public CustomAuthorizationFilter(Logger log) {
+    public CustomAuthorizationFilter(Logger log, AppPropertiesConfiguration appPropertiesConfiguration) {
         this.log = log;
+        this.appPropertiesConfiguration = appPropertiesConfiguration;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        log.info("EL OUTO SERVLET PATH {}",request.getServletPath());
         // if in login or signup page or refresh token request don't trigger this
-        if (request.getServletPath().equals("/auth/login/")
-                || request.getServletPath().equals("/auth/refreshToken")
-                || request.getServletPath().equals("/auth/signup/")) {
+        if (request.getServletPath().equals("/")
+                || request.getServletPath().equals("/login")
+                || request.getServletPath().equals("/signup")) {
             chain.doFilter(request, response);
         } else {
             String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -80,7 +79,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     private DecodedJWT verifyAndDecodeJwt(String authHeader) {
         String token = authHeader.substring("Bearer ".length());
-        Algorithm algorithm = Algorithm.HMAC256(jwtSecret.getBytes(StandardCharsets.UTF_8));
+        Algorithm algorithm = Algorithm.HMAC256(appPropertiesConfiguration.getJwtSecret().getBytes(StandardCharsets.UTF_8));
         JWTVerifier verifier = JWT.require(algorithm).build();
         return verifier.verify(token);
     }
