@@ -57,7 +57,7 @@ public class SecurityConfiguration {
                 // first we add the customAuthenticationFilter and after it the customAuthorizationFilter
                 .addFilter(customAuthenticationFilter)
                 // the first parameter is the filter,
-                // the second is the class of the preceding filter (customAuthenticationFilter)
+                // the second is the extended class of the preceding filter (customAuthenticationFilter)
                 .addFilterAfter(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
