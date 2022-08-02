@@ -42,7 +42,6 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        // if in login or signup page or refresh token request don't trigger this
         if (request.getServletPath().equals("/")
                 || request.getServletPath().equals("/login")
                 || request.getServletPath().equals("/signup")) {
@@ -56,6 +55,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                     chain.doFilter(request, response);
                 } catch (TokenExpiredException e) {
+                    // not implemented for this demo, we would check the refresh token in the database and,
+                    // if not expired, would generate new tokens for the user
                     var error =
                             Map.of("Error:", "Expired Token", "Expired:", true);
                     generateErrorResponse(e, response, error);

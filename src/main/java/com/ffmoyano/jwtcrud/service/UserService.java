@@ -21,7 +21,7 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    // this methods provides the UserDetails object to the attemptAuthentication method of AuthenticationManager
+    // this overrided method defines how the authentication is realized by the authentication manager
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         AppUser user = userRepository.findByEmail(email);

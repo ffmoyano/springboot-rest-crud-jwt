@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -93,6 +94,12 @@ public class AdventurerController {
     public ResponseEntity<?> update(@Valid @ModelAttribute AdventurerDto adventurerDto, BindingResult result) {
         Map<String, Object> response = new HashMap<>();
 
+        // as the id is not obligatory in this dto because it's not available when creating the object,
+        // we enforce its use when trying to update an existing element
+        if(adventurerDto.getId() == null) {
+            result.addError(new FieldError("AdventurerDto","id", "no puede estar vacío."));
+        }
+
         if (result.hasErrors()) {
             List<String> errors = result.getFieldErrors()
                     .stream()
@@ -103,11 +110,11 @@ public class AdventurerController {
         }
 
         try {
-            if (adventurerDto.getId() != null) {
+            if (service.findById(adventurerDto.getId())!= null) {
                 service.save(adventurerDto);
             } else {
-                response.put("mensaje", "Falta el Id del personaje");
-                return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+                response.put("mensaje", "No existe un personaje con ese id en la base de datos");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
         } catch (DataAccessException e) {
