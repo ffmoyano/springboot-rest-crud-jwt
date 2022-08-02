@@ -1,4 +1,4 @@
-Rest API example with CRUD and JWT auth
+### Rest API example with CRUD and JWT auth
 
 This app uses the following parameters in application.properties
 
@@ -12,5 +12,4 @@ spring.jpa.hibernate.ddl-auto=update
 
 spring.jpa.properties.hibernate.dialect=yourdialect
 
-# jwt secret key (it is accesed by the AppPropertiesConfiguration class)
 variables.jwtSecret=yourjwtsecret
