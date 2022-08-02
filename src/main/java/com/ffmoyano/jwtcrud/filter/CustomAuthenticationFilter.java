@@ -1,7 +1,7 @@
 package com.ffmoyano.jwtcrud.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ffmoyano.jwtcrud.dto.TokenResponse;
+import com.ffmoyano.jwtcrud.dto.TokenDto;
 import com.ffmoyano.jwtcrud.entity.AppUser;
 import com.ffmoyano.jwtcrud.entity.Token;
 import com.ffmoyano.jwtcrud.service.TokenService;
@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -48,18 +47,18 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     protected void successfulAuthentication(
             HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-            Authentication authentication) throws IOException, ServletException {
+            Authentication authentication) throws IOException {
 
         // retrieve user data from principal and generate tokens
         User user = (User) authentication.getPrincipal();
         String url = request.getRequestURL().toString();
-        TokenResponse tokens = tokenService.generateTokens(user, url);
+        TokenDto tokens = tokenService.generateTokens(user, url);
         // retrieve user from username and save tokens to database
-        AppUser idunnUser = userService.findByEmail(user.getUsername());
-        Token token = tokenService.findTokenByUser(idunnUser);
+        AppUser appUser = userService.findByEmail(user.getUsername());
+        Token token = tokenService.findTokenByUser(appUser);
         if(token == null) {
             token = new Token();
-            token.setUser(idunnUser);
+            token.setUser(appUser);
         }
         token.setToken(tokens.getAuthToken());
         token.setRefreshToken(tokens.getRefreshToken());

@@ -4,18 +4,16 @@ package com.ffmoyano.jwtcrud.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.ffmoyano.jwtcrud.configuration.AppPropertiesConfiguration;
-import com.ffmoyano.jwtcrud.dto.TokenResponse;
+import com.ffmoyano.jwtcrud.dto.TokenDto;
 import com.ffmoyano.jwtcrud.entity.Token;
 import com.ffmoyano.jwtcrud.entity.AppUser;
 import com.ffmoyano.jwtcrud.repository.TokenRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -32,19 +30,12 @@ public class TokenService {
         this.appPropertiesConfiguration = appPropertiesConfiguration;
     }
 
-    public TokenResponse generateTokens(User user, String url) {
+    public TokenDto generateTokens(User user, String url) {
         String jwtToken = generateJwt(user.getUsername(), user.getAuthorities(), url);
         String refreshToken = generateRefreshToken();
-        return new TokenResponse(jwtToken, refreshToken);
+        return new TokenDto(jwtToken, refreshToken);
     }
 
-    public TokenResponse generateTokens(AppUser user, String url) {
-        var authorities = new ArrayList<GrantedAuthority>();
-        user.getRoles().forEach(r -> authorities.add(new SimpleGrantedAuthority(r.getName())));
-        String jwtToken = generateJwt(user.getEmail(), authorities, url);
-        String refreshToken = generateRefreshToken();
-        return new TokenResponse(jwtToken, refreshToken);
-    }
 
     private String generateJwt(String email, Collection<GrantedAuthority> authorities, String url) {
 
@@ -75,8 +66,5 @@ public class TokenService {
         return tokenRepository.findTokenByUser(user);
     }
 
-    public Token findTokenByRefreshToken(String refreshToken) {
-        return tokenRepository.findTokenByRefreshToken(refreshToken);
-    }
 
 }

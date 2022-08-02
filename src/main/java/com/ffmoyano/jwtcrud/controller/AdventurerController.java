@@ -32,7 +32,7 @@ public class AdventurerController {
 
     // path example: localhost:8080/adventurer/1
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable(value = "id", required = true) Long id) {
+    public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         AdventurerDto adventurerDto;
         Map<String, Object> response = new HashMap<>();
         try {
@@ -76,7 +76,7 @@ public class AdventurerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable(value = "id", required = true) Long id) {
+    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
         Map<String, Object> response = new HashMap<>();
         AdventurerDto adventurerDto = service.findById(id);
         try {

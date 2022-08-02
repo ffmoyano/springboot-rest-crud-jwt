@@ -1,6 +1,6 @@
 package com.ffmoyano.jwtcrud.dto;
 
-public class TokenResponse {
+public class TokenDto {
 
     private String authToken;
 
@@ -22,7 +22,7 @@ public class TokenResponse {
         this.refreshToken = refreshToken;
     }
 
-    public TokenResponse(String authToken, String refreshToken) {
+    public TokenDto(String authToken, String refreshToken) {
         this.authToken = authToken;
         this.refreshToken = refreshToken;
     }
