@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,7 @@ public class AdventurerController {
         try {
             adventurerDto = service.findById(id);
         } catch (DataAccessException e) {
-            response.put("error", String.format("error", "%s: %s", e.getMessage(), e.getMostSpecificCause().getMessage()));
+            response.put("error", String.format("error %s: %s", e.getMessage(), e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         if (adventurerDto == null) {

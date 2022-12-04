@@ -47,10 +47,10 @@ public class SecurityConfiguration {
 
         http
                 .cors().and().csrf().disable()
-                .authorizeRequests(authorize ->
+                .authorizeHttpRequests(authorize ->
                         authorize
-                                .antMatchers("/adventurer/**").hasRole("USER")
-                                .antMatchers("/**").permitAll()
+                                .requestMatchers("/adventurer/**").hasRole("USER")
+                                .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
