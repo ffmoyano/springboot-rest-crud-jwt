@@ -52,9 +52,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     chain.doFilter(request, response);
                 } catch (TokenExpiredException e) {
                     // return 401 with the refresh token and then te client asks for a new token
-                    String refreshToken = request.getParameter("RefreshToken");
                     var error =
-                            Map.of("Error", "Expired Token","RefreshToken", refreshToken);
+                            Map.of("Error", "Expired Token");
                     generateErrorResponse(e, response, error);
                 } catch (Exception e) {
                     var error = Map.of("Error:", e.getMessage());

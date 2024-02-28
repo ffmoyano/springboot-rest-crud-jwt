@@ -22,7 +22,7 @@ The authorization and authentication are managed by Spring Security with UserDet
 **filter.CustomAuthorizationFilter**, which extends **OncePerRequestFilter**.  
 The **UserDetails.loadUserByUsername** method is implemented in the **service.UserService** class.
 
-`When the server returns an unauthorized code, the client must check if it also returns a refreshtoken.
+When the server returns an unauthorized code, the client must check if the returned error in body is "Expired Token".
 If it does it must call the server endpoint "refreshToken", to see if a new token can be issued.
 
 For security reasons the **application.properties** is not added to the repository,   
