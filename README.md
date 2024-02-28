@@ -22,14 +22,11 @@ The authorization and authentication are managed by Spring Security with UserDet
 **filter.CustomAuthorizationFilter**, which extends **OncePerRequestFilter**.  
 The **UserDetails.loadUserByUsername** method is implemented in the **service.UserService** class.
 
-Although the Token entity has a refreshToken string defined,   
-the refresh process is not implemented in the app as it doesn't require  
-anything specific of Spring.
-If you wish to implement it you could do so in the  
-**catch(TokenExpiredException e)** in the CustomAuthorizationFilter.
+`When the server returns an unauthorized code, the client must check if it also returns a refreshtoken.
+If it does it must call the server endpoint "refreshToken", to see if a new token can be issued.
 
 For security reasons the **application.properties** is not added to the repository,   
-so here are listed the properties used:
+so here are listed the properties used:`
 
 
 spring.datasource.url=yourdatabaseconnectionstring  
