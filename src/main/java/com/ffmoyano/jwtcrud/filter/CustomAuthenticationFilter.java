@@ -51,10 +51,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         // retrieve user data from principal and generate tokens
         User user = (User) authentication.getPrincipal();
-        String url = request.getRequestURL().toString();
-        TokenDto tokens = tokenService.generateTokens(user, url);
-        // retrieve user from username and save tokens to database
         AppUser appUser = userService.findByEmail(user.getUsername());
+        // retrieve user from username and save tokens to database
+        TokenDto tokens = tokenService.generateTokens(appUser);
+
         Token token = tokenService.findTokenByUser(appUser);
         if(token == null) {
             token = new Token();

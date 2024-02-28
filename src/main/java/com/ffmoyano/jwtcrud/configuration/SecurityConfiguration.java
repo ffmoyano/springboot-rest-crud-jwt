@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                 new CustomAuthenticationFilter(authenticationManager, userService, tokenService);
 
         CustomAuthorizationFilter customAuthorizationFilter =
-                new CustomAuthorizationFilter(logger, appPropertiesConfiguration);
+                new CustomAuthorizationFilter(logger, appPropertiesConfiguration, tokenService);
 
         http
                 .cors(AbstractHttpConfigurer::disable)
@@ -52,6 +52,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers("/adventurer/**").hasRole("USER")
+                                .requestMatchers("/authorized").hasAnyRole()
                                 .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(sessionManagement ->

@@ -1,12 +1,10 @@
 package com.ffmoyano.jwtcrud.filter;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ffmoyano.jwtcrud.configuration.AppPropertiesConfiguration;
+import com.ffmoyano.jwtcrud.service.TokenService;
 import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,12 +29,11 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     private final Logger log;
+    private final TokenService tokenService;
 
-    private final AppPropertiesConfiguration appPropertiesConfiguration;
-
-    public CustomAuthorizationFilter(Logger log, AppPropertiesConfiguration appPropertiesConfiguration) {
+    public CustomAuthorizationFilter(Logger log, AppPropertiesConfiguration appPropertiesConfiguration, TokenService tokenService) {
         this.log = log;
-        this.appPropertiesConfiguration = appPropertiesConfiguration;
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -49,18 +46,18 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 try {
-                    DecodedJWT decodedJWT = verifyAndDecodeJwt(authHeader);
+                    DecodedJWT decodedJWT = tokenService.verifyAndDecodeJwt(authHeader);
                     UsernamePasswordAuthenticationToken authToken = getAuthorizationToken(decodedJWT);
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                     chain.doFilter(request, response);
                 } catch (TokenExpiredException e) {
-                    // not implemented for this demo, we would check the refresh token in the database and,
-                    // if not expired, would generate new tokens for the user
+                    // return 401 with the refresh token and then te client asks for a new token
+                    String refreshToken = request.getParameter("RefreshToken");
                     var error =
-                            Map.of("Error:", "Expired Token", "Expired:", true);
+                            Map.of("Error", "Expired Token","RefreshToken", refreshToken);
                     generateErrorResponse(e, response, error);
                 } catch (Exception e) {
-                    var error = Map.of("Error:", e);
+                    var error = Map.of("Error:", e.getMessage());
                     generateErrorResponse(e, response, error);
                 }
             } else {
@@ -77,14 +74,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         return new UsernamePasswordAuthenticationToken(username, null, authorities);
     }
 
-    private DecodedJWT verifyAndDecodeJwt(String authHeader) {
-        String token = authHeader.substring("Bearer ".length());
-        Algorithm algorithm = Algorithm.HMAC256(appPropertiesConfiguration.getJwtSecret().getBytes(StandardCharsets.UTF_8));
-        JWTVerifier verifier = JWT.require(algorithm).build();
-        return verifier.verify(token);
-    }
 
-    private void generateErrorResponse(Exception e, HttpServletResponse response, Map error) throws IOException {
+
+    private void generateErrorResponse(Exception e, HttpServletResponse response, Map<String, String> error) throws IOException {
         log.error("Error procesando el token JWT en el filtro de autorizacion: ", e);
         response.setHeader("Error", e.getMessage());
         response.setStatus(UNAUTHORIZED.value());
